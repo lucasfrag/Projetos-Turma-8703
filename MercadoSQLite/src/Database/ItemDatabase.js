@@ -103,4 +103,43 @@ export default class ItemDatabase {
             });
         });
     }
+
+    Atualizar(id) {
+        return new Promise((resolve) => {
+            this.Conectar().then((db) => {
+                db.transaction((tx) => {
+                    tx.executeSql('UPDATE Item SET status="Comprado" WHERE id = ?', [id]).then(([tx, results]) => {
+                        resolve(results);
+                    });
+                }).then((result) => {
+                    this.Desconectar(db);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }).catch((err) => {
+                console.log(err);
+            });
+        });
+
+    }
+
+    Remover(id) {  
+        return new Promise((resolve) => {    
+            this.Conectar().then((db) => {      
+                db.transaction((tx) => {       
+                    tx.executeSql('DELETE FROM Item WHERE id = ?', [id]).then(([tx, results]) => {          
+                        console.log(results);          
+                        resolve(results);        
+                    });      
+                }).then((result) => {        
+                    this.Desconectar(db);      
+                }).catch((err) => {        
+                    console.log(err);      
+                });    
+            }).catch((err) => {      
+                console.log(err);    
+            });  
+        });  
+    }
+              
 }
