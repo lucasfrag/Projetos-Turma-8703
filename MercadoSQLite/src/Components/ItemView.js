@@ -1,35 +1,35 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/dist/FontAwesome5';
 
-export default class ItemView extends Component {
-    render() {
+export default function ItemView(props) {
         return(
             <View style={{margin: 10, borderRadius: 5, padding: 10, borderWidth: 1, borderColor: 'grey'}}>
-                <Text>ID: {this.props.id}</Text>
-                <Text>Nome: {this.props.nome} ({this.props.quantidade} unidades)</Text>
-                <Text>Descrição: {this.props.descricao}</Text>
-                <Text>Valor: {this.props.valor}</Text>
-                <Text style={this.getEstilo()}>Status: {this.props.status}</Text>
+                <Text>ID: {props.id}</Text>
+                <Text>Nome: {props.nome} ({props.quantidade} unidades)</Text>
+                <Text>Descrição: {props.descricao}</Text>
+                <Text>Valor: {props.valor}</Text>
+                <Text style={getEstilo()}>Status: {props.status}</Text>
                 <Text></Text>
 
                 <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity style={{flex: 1, backgroundColor: 'green', margin: 1, padding: 3, alignItems: 'center'}} onPress={() => this.props.comprado(this.props.id)}>
-                        <Text style={{color: 'white'}}>Comprado</Text>
+                    <TouchableOpacity style={{flex: 1, backgroundColor: 'green', margin: 1, padding: 3, alignItems: 'center'}} onPress={() => props.comprado(props.id)}>
+                        <Text style={{color: 'white'}}><FontAwesome5 name="check" /> Comprado</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1, backgroundColor: 'red', margin: 1, padding: 3, alignItems: 'center'}} onPress={() => this.props.deletar(this.props.id)}>
-                        <Text style={{color: 'white'}}>Remover</Text>
+                    <TouchableOpacity style={{flex: 1, backgroundColor: 'red', margin: 1, padding: 3, alignItems: 'center'}} onPress={() => props.deletar(props.id)}>
+                        <Text style={{color: 'white'}}><FontAwesome5 name="trash" /> Remover</Text>
                     </TouchableOpacity>
                 </View>
 
             </View>
         )
     }
-
+    
     getEstilo = () => {
-        if(this.props.status == "A comprar") {
+    /*    if(props.status == "A comprar") {
             return {color: 'blue'}
-        } else if (this.props.status == "Comprado") {
-            return {color: 'green'}
-        }
+        } else if (props.status == "Comprado") {
+    */        return {color: 'green'}
+    //    }
     }
-}

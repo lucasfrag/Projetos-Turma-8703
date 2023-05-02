@@ -8,7 +8,7 @@ export default class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <DrawerNavigator />
+        <TabNavigator />
       </NavigationContainer>
     )
   }

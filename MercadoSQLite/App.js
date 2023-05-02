@@ -1,99 +1,58 @@
 import React, { Component } from 'react';
-import { View, Text, Button, ScrollView, TextInput } from 'react-native';
 
-import ItemDatabase from './src/Database/ItemDatabase';
-import Item from './src/Models/Item';
-import ItemView from './src/Components/ItemView';
+// Importação das telas
+import Cadastro from './src/Pages/Cadastro';
+import Listagem from './src/Pages/Listagem';
+
+// Configuração da navegação
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+const Tab = createBottomTabNavigator();
+
+// Importação de ícones
+import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
+import Produto from './src/Pages/Produto';
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      nome: "Não especificado",
-      descricao: "",
-      valor: 0,
-      quantidade: 0,
-      status: "A comprar",
-      lista: []
-    }
-    this.Listar();
-  }
-
-  Listar = () => {
-    const db = new ItemDatabase();
-    db.Listar().then(
-      data => {
-        this.setState({ lista: data })
-      }
-    )
-  }
-
-  Cadastrar = (nome, descricao, valor, quantidade, status) => {
-    const db = new ItemDatabase();
-    const novoItem = new Item(nome, descricao, valor, quantidade, status);
-    db.Cadastrar(novoItem);
-    this.Listar();
-  }
-
-  Atualizar = (id) => {
-    const db = new ItemDatabase();
-    db.Atualizar(id);
-    this.Listar();
-  }
-
-  Remover = (id) => {
-    const db = new ItemDatabase();
-    db.Remover(id);
-    this.Listar();
-  }  
-/*
-  verificarDataCadastro = () => {
-    let diaHoje = new Date().getDate();
-    let mesHoje = new Date().getMonth() + 1;
-    let anoHoje = new Date().getFullYear();
-    return diaHoje + "/" + mesHoje + "/" + anoHoje;
-  }
-*/
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <View>
-          <Text>Cadastro de itens</Text>
-          <TextInput onChangeText={(textoDigitado) => this.setState({nome: textoDigitado})} placeholder="Nome" />
-          <TextInput onChangeText={(textoDigitado) => this.setState({descricao: textoDigitado})} placeholder="Descrição" />
-          <TextInput onChangeText={(textoDigitado) => this.setState({valor: textoDigitado})} placeholder="Valor" />
-          <TextInput onChangeText={(textoDigitado) => this.setState({quantidade: textoDigitado})} placeholder="Quantidade" />
-
-          <Button title="Cadastrar"
-            onPress={() => this.Cadastrar(
-              this.state.nome,
-              this.state.descricao,
-              this.state.valor,
-              this.state.quantidade,
-              this.state.status)
-            }
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName='Listagem'
+          screenOptions={{
+            tabBarActiveTintColor: '#e91e63',
+          }}
+        >
+          <Tab.Screen
+            name="Listagem"
+            component={Listagem}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome name="th-list" color={color} size={size} />
+              ),
+            }}
           />
-        </View>
-        <ScrollView>
-          <Text>Lista de itens</Text>
-          {
-            this.state.lista.map(
-              item => (
-                <ItemView 
-                  id={item.id} 
-                  nome={item.nome} 
-                  valor={item.valor}
-                  quantidade={item.quantidade}
-                  status={item.status}
-
-                  comprado={this.Atualizar}
-                  deletar={this.Remover}
-                />
-              )
-            )
-          }
-        </ScrollView>
-      </View>
+          <Tab.Screen
+            name="Cadastro"
+            component={Cadastro}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome name="save" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Produto"
+            component={Produto}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome name="save" color={color} size={size} />
+              ),
+            }}
+          />
+          
+        </Tab.Navigator>
+      </NavigationContainer>
     )
   }
 }

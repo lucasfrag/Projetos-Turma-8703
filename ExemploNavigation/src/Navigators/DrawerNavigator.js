@@ -14,8 +14,6 @@ export default class DrawerNavigator extends Component {
         <Drawer.Navigator>
           <Drawer.Screen name="Home" component={Home} />
           <Drawer.Screen name="Produtos" component={Produtos} />
-          <Drawer.Screen name="Produto X" component={Produto1} />
-          <Drawer.Screen name="Produto Y" component={Produto2} />
         </Drawer.Navigator>
     )
   }
